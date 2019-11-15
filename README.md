@@ -8,7 +8,7 @@
 - [ ] 人脸检测 
 - [ ] 身份验证 
 
-##示例
+## 示例
 ```go
 var f = New(APP_KEY, APP_SECRET)
 if res, err := f.GetUser("1", "demo1"); err != nil {
