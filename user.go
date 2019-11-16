@@ -45,7 +45,16 @@ type RegRes struct {
 // 人脸注册
 func (f *Face) AddUser(register *Register) (res *RegRes, err error) {
 	res = &RegRes{}
-	err = f.tool(lib.USER_ADD, url.Values{
+	if register.QualityControl == "" {
+		register.QualityControl = "NONE"
+	}
+	if register.LivenessControl == "" {
+		register.LivenessControl = "NONE"
+	}
+	if register.ActionType == "" {
+		register.ActionType = "APPEND"
+	}
+	err = f.PostForm(lib.USER_ADD, url.Values{
 		"image":            {register.Image},
 		"image_type":       {register.ImageType},
 		"group_id":         {register.GroupId},
@@ -63,7 +72,16 @@ func (f *Face) AddUser(register *Register) (res *RegRes, err error) {
 // 人脸更新
 func (f *Face) UpdateUser(register *Register) (res *RegRes, err error) {
 	res = &RegRes{}
-	err = f.tool(lib.USER_UPDATE, url.Values{
+	if register.QualityControl == "" {
+		register.QualityControl = "NONE"
+	}
+	if register.LivenessControl == "" {
+		register.LivenessControl = "NONE"
+	}
+	if register.ActionType == "" {
+		register.ActionType = "UPDATE"
+	}
+	err = f.PostForm(lib.USER_UPDATE, url.Values{
 		"image":            {register.Image},
 		"image_type":       {register.ImageType},
 		"group_id":         {register.GroupId},
@@ -80,10 +98,10 @@ func (f *Face) UpdateUser(register *Register) (res *RegRes, err error) {
 
 // 删除人脸
 func (f *Face) DelUserFace(userId, groupId, faceToken string) (err error) {
-	err = f.tool(lib.USER_FACE_DEL, url.Values{
-		"user_id":      {userId},
-		"group_id":     {groupId},
-		"face_token":   {faceToken},
+	err = f.PostForm(lib.USER_FACE_DEL, url.Values{
+		"user_id":    {userId},
+		"group_id":   {groupId},
+		"face_token": {faceToken},
 	}, &Reply{})
 	return
 }
@@ -98,9 +116,9 @@ type User struct {
 // 用户信息查询
 func (f *Face) GetUser(userId, groupId string) (res *User, err error) {
 	res = &User{}
-	err = f.tool(lib.USER_GET, url.Values{
-		"user_id":      {userId},
-		"group_id":     {groupId},
+	err = f.PostForm(lib.USER_GET, url.Values{
+		"user_id":  {userId},
+		"group_id": {groupId},
 	}, &Reply{
 		Result: res,
 	})
@@ -117,9 +135,9 @@ type UserFaceList struct {
 // 人脸列表
 func (f *Face) ListUserFace(userId, groupId string) (res *UserFaceList, err error) {
 	res = &UserFaceList{}
-	err = f.tool(lib.USER_FACE_LIST, url.Values{
-		"user_id":      {userId},
-		"group_id":     {groupId},
+	err = f.PostForm(lib.USER_FACE_LIST, url.Values{
+		"user_id":  {userId},
+		"group_id": {groupId},
 	}, &Reply{
 		Result: res,
 	})
@@ -133,7 +151,13 @@ type UserList struct {
 // 用户列表
 func (f *Face) ListUser(groupId, start, length string) (res *UserList, err error) {
 	res = &UserList{}
-	err = f.tool(lib.USER_LIST, url.Values{
+	if start == "" {
+		start = "0"
+	}
+	if length == "" {
+		length = "100"
+	}
+	err = f.PostForm(lib.USER_LIST, url.Values{
 		"group_id": {groupId},
 		"start":    {start},
 		"length":   {length},
@@ -145,12 +169,10 @@ func (f *Face) ListUser(groupId, start, length string) (res *UserList, err error
 
 // 复制用户
 func (f *Face) CopyUser(user_id, src_group_id, dst_group_id string) (err error) {
-	err = f.tool(lib.USER_COPY, url.Values{
+	err = f.PostForm(lib.USER_COPY, url.Values{
 		"user_id":      {user_id},
 		"src_group_id": {src_group_id},
 		"dst_group_id": {dst_group_id},
 	}, &Reply{})
 	return
 }
-
-

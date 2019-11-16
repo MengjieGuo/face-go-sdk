@@ -1,7 +1,9 @@
 package face
 
 import (
+	"encoding/base64"
 	"fmt"
+	"io/ioutil"
 	"testing"
 )
 
@@ -11,10 +13,11 @@ var f = New(APP_KEY, APP_SECRET)
 
 var reg = &Register{
 	//Image:           "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573837226842&di=311e9cb79691395e0c6243b9b4751b96&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn10104%2F719%2Fw358h361%2F20181223%2Fea63-hqqzpku4309788.bmp",
-	Image:           "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2385696140,1893414624&fm=15&gp=0.jpg",
+	//Image:           "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2385696140,1893414624&fm=15&gp=0.jpg",
+	Image:"http://ww1.sinaimg.cn/large/0060QYYfly1g8zqstbp57j30dq0dqwex.jpg",
 	ImageType:       "URL",
 	GroupId:         "demo1",
-	UserId:          "1",
+	UserId:          "jy",
 	UserInfo:        "jy",
 	QualityControl:  "NONE",
 	LivenessControl: "NONE",
@@ -22,7 +25,10 @@ var reg = &Register{
 }
 
 func TestFace_AddUser(t *testing.T) {
-
+	image, _:= ioutil.ReadFile("jy.jpg")
+	imageBase64 := base64.StdEncoding.EncodeToString(image)
+	reg.Image=imageBase64
+	reg.ImageType="BASE64"
 	if res, err := f.AddUser(reg); err != nil {
 		fmt.Println(err)
 	} else {

@@ -15,5 +15,11 @@ const (
 	USER_LIST      = "https://aip.baidubce.com/rest/2.0/face/v3/faceset/group/getusers"
 	USER_COPY      = "https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/copy"
 
-	FACE_VERIFY = "https://aip.baidubce.com/rest/2.0/face/v3/faceverify"
+	FACE_VERIFY   = "https://aip.baidubce.com/rest/2.0/face/v3/faceverify"
+	PERSON_VERIFY = "https://aip.baidubce.com/rest/2.0/face/v3/person/verify"
+	ID_MATCH      = "https://aip.baidubce.com/rest/2.0/face/v3/person/idmatch"
+
+	FACE_SEARCH = "https://aip.baidubce.com/rest/2.0/face/v3/search"
+
+	FACE_MATCH = "https://aip.baidubce.com/rest/2.0/face/v3/match"
 )

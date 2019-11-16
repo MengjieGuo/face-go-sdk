@@ -3,10 +3,9 @@
 
 - [x] 人脸库管理  
 - [x] 在线活体检测 
-- [ ] 人脸搜索 
-- [ ] 人脸对比 
-- [ ] 人脸检测 
-- [ ] 身份验证 
+- [x] 人脸搜索 
+- [x] 人脸对比 
+- [x] 身份验证 
 
 ## 示例
 ```go
@@ -18,3 +17,6 @@ if res, err := f.GetUser("1", "demo1"); err != nil {
 	}
 ```
 
+> 错误码表 https://cloud.baidu.com/doc/FACE/s/xk25rddsw
+
+### 具体请查阅API文档 https://cloud.baidu.com/doc/FACE/s/rk25rddle

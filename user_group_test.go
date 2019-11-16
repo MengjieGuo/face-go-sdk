@@ -12,7 +12,7 @@ func TestFace_AddUserGroup(t *testing.T) {
 }
 
 func TestFace_ListUserGroup(t *testing.T) {
-	if list, err := f.ListUserGroup(); err != nil {
+	if list, err := f.ListUserGroup("0","10"); err != nil {
 		fmt.Println(err)
 	} else {
 		fmt.Printf("%+v \n", list)

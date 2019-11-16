@@ -1,6 +1,7 @@
 package face
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,7 +21,29 @@ func New(appKey string, appSecret string) *Face {
 	}
 }
 
-func (f *Face) tool(url string, v url.Values, res *Reply) (err error) {
+func (f *Face) PostJson(url string, v []byte, res *Reply) (err error) {
+	if err = f.Token.SetAccessToken(); err != nil {
+		return
+	}
+	resp, err := http.Post(url+"?access_token="+f.Token.AccessToken, "application/json", bytes.NewReader(v))
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+	bytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return
+	}
+	if err = json.Unmarshal(bytes, res); err != nil {
+		return
+	}
+	if res.ErrorCode != 0 {
+		return errors.New(fmt.Sprintf("%d:%s", res.ErrorCode, res.ErrorMsg))
+	}
+	return
+}
+
+func (f *Face) PostForm(url string, v url.Values, res *Reply) (err error) {
 	if err = f.Token.SetAccessToken(); err != nil {
 		return
 	}
