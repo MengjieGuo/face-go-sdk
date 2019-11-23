@@ -22,4 +22,6 @@ const (
 	FACE_SEARCH = "https://aip.baidubce.com/rest/2.0/face/v3/search"
 
 	FACE_MATCH = "https://aip.baidubce.com/rest/2.0/face/v3/match"
+
+	GESTURE_URL = "https://aip.baidubce.com/rest/2.0/image-classify/v1/gesture"
 )
